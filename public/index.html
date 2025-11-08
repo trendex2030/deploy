@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WhatsApp Bot Deployment</title>
+</head>
+<body>
+  <h1>Deploy Your WhatsApp Bot</h1>
+  <form id="deployForm">
+    <input type="text" id="appName" placeholder="App Name" required />
+    <input type="text" id="sessionId" placeholder="Session ID" required />
+    <button type="submit">Deploy</button>
+  </form>
+
+  <script>
+    document.getElementById("deployForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const appName = document.getElementById("appName").value;
+      const sessionId = document.getElementById("sessionId").value;
+
+      const resp = await fetch("/heroku/create-app", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ appName, sessionId })
+      });
+
+      const data = await resp.json();
+      alert(JSON.stringify(data));
+    });
+  </script>
+</body>
+</html>
